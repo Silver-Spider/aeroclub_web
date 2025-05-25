@@ -1,0 +1,2134 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AeroBMSCE - Aeromodelling & Drone Community</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const toggleSwitch = document.getElementById("input");
+
+        if (localStorage.getItem("theme") === "dark") {
+          document.documentElement.classList.add("dark");
+          toggleSwitch.checked = true;
+        }
+
+        toggleSwitch.addEventListener("change", () => {
+          if (toggleSwitch.checked) {
+            document.documentElement.classList.add("dark");
+            localStorage.setItem("theme", "dark");
+          } else {
+            document.documentElement.classList.remove("dark");
+            localStorage.setItem("theme", "light");
+          }
+        });
+      });
+    </script>
+
+    <style>
+      :where([class^="ri-"])::before {
+        content: "\f3c2";
+      }
+      .dark body {
+        background-color: #1e1e1e;
+        color: #e5e5e5;
+      }
+      .dark .bg-white {
+        background-color: #2d2d2d;
+      }
+      .dark .bg-gray-50 {
+        background-color: #1e1e1e;
+      }
+      .dark .text-gray-700 {
+        color: #e5e5e5;
+      }
+      .dark .text-gray-800 {
+        color: #f3f3f3;
+      }
+      .dark .border-gray-300 {
+        border-color: #404040;
+      }
+      .dark .bg-blue-100 {
+        background-color: rgba(79, 195, 247, 0.2);
+      }
+      .dark .shadow-lg {
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3),
+          0 4px 6px -2px rgba(0, 0, 0, 0.2);
+      }
+      .dark .text-primary {
+        color: #00ffff;
+      }
+      .dark h1,
+      .dark h2,
+      .dark h3,
+      .dark h4,
+      .dark h5,
+      .dark h6 {
+        color: #00ffff;
+      }
+      .dark .filter-button {
+        color: #00ffff;
+      }
+      .dark .filter-button.active {
+        background-color: #00ffff;
+        color: #1e1e1e;
+      }
+      .dark .team-card .text-primary {
+        color: #0fff95;
+      }
+      .dark .stats-card .text-primary {
+        color: #ff00ff;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        scroll-behavior: smooth;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "Orbitron", sans-serif;
+      }
+      .hero-section {
+        height: 100vh;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+      }
+      .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 0;
+      }
+      /* Animated underline effect on navbar links */
+      .navbar a {
+        position: relative;
+        color: inherit; /* use current color */
+        text-decoration: none;
+        padding-bottom: 4px;
+        font-weight: 600;
+        transition: color 0.3s ease;
+      }
+
+      .navbar a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 3px;
+        width: 0%;
+        background: var(--secondary-color, #00ffff); /* fallback cyan */
+        border-radius: 2px;
+        transition: width 0.3s ease;
+      }
+
+      .navbar a:hover::after,
+      .navbar a:focus::after {
+        width: 100%;
+      }
+
+      /* Light mode variables */
+      :root {
+        --bg-color: #ffffff;
+        --text-color: #1e1e1e;
+        --secondary-color: #0077ff;
+        --navbar-bg: rgba(255, 255, 255, 0.9);
+      }
+
+      /* Dark mode variables */
+      .dark {
+        --bg-color: #1e1e1e;
+        --text-color: #e5e5e5;
+        --secondary-color: #00ffff;
+        --navbar-bg: rgba(26, 35, 126, 0.95);
+      }
+
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        transition: background-color 0.4s ease, color 0.4s ease;
+      }
+
+      .navbar {
+        background-color: var(--navbar-bg);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        transition: background-color 0.4s ease, box-shadow 0.4s ease;
+        backdrop-filter: saturate(180%) blur(20px);
+      }
+
+      /* Navbar links color (inherit) */
+      .navbar a {
+        color: var(--text-color);
+      }
+
+      /* On hover, change text color */
+      .navbar a:hover,
+      .navbar a:focus {
+        color: var(--secondary-color);
+        outline: none;
+      }
+
+      /* Mobile menu links hover */
+      #mobile-menu a:hover,
+      #mobile-menu a:focus {
+        color: var(--secondary-color);
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 6px;
+        outline: none;
+      }
+
+      /* Transition for the mobile menu */
+      #mobile-menu {
+        transition: max-height 0.3s ease, opacity 0.3s ease;
+        overflow: hidden;
+        max-height: 0;
+        opacity: 0;
+      }
+
+      #mobile-menu.active {
+        max-height: 500px; /* enough to show all links */
+        opacity: 1;
+      }
+
+      /* Optional: make the dark/light toggle label clickable and nice */
+      .switch {
+        cursor: pointer;
+        user-select: none;
+      }
+
+      /* Optional smooth color transitions on toggle */
+      .switch input[type="checkbox"] {
+        cursor: pointer;
+      }
+
+      /* Keep your logo size and background intact - no changes here */
+
+      .team-card {
+        transition: all 0.5s ease;
+        transform: translateX(-20px);
+        background-color: #fff;
+      }
+
+      .team-card:hover {
+        transform: translateX(0) translateY(-12px);
+        background-color: #000;
+        /* color: #00ffff; optional: neon cyan text in dark */
+        box-shadow: 0 25px 35px -5px rgba(0, 0, 0, 0.3),
+          0 15px 15px -5px rgba(0, 0, 0, 0.1);
+      }
+      .dark .team-card {
+        transition: all 0.5s ease;
+        transform: translateX(-20px);
+        background-color: #1a1a1a;
+      }
+
+      .dark .team-card:hover {
+        transform: translateX(0) translateY(-12px);
+        background-color: #000;
+        color: #00ffff;
+        box-shadow: 0 25px 35px -5px rgba(0, 255, 255, 0.3),
+          0 15px 15px -5px rgba(0, 255, 255, 0.1);
+      }
+
+      .gallery-item {
+        overflow: hidden;
+        position: relative;
+      }
+      .gallery-item img {
+        transition: transform 0.5s ease;
+      }
+      .gallery-item:hover img {
+        transform: scale(1.05);
+      }
+      .gallery-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.8) 0%,
+          rgba(0, 0, 0, 0) 100%
+        );
+        padding: 20px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      .gallery-item:hover .gallery-overlay {
+        opacity: 1;
+      }
+      .scroll-down {
+        animation: bounce 2s infinite;
+      }
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-20px);
+        }
+        60% {
+          transform: translateY(-10px);
+        }
+      }
+      input[type="checkbox"],
+      input[type="radio"] {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 20px;
+        height: 20px;
+        border: 2px solid #4fc3f7;
+        border-radius: 4px;
+        outline: none;
+        cursor: pointer;
+        position: relative;
+      }
+      input[type="checkbox"]:checked,
+      input[type="radio"]:checked {
+        background-color: #4fc3f7;
+      }
+      input[type="checkbox"]:checked::before,
+      input[type="radio"]:checked::before {
+        content: "✓";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 12px;
+      }
+      input[type="radio"] {
+        border-radius: 50%;
+      }
+      input[type="radio"]:checked::before {
+        content: "";
+        width: 10px;
+        height: 10px;
+        background-color: white;
+        border-radius: 50%;
+      }
+      .custom-range {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 8px;
+        border-radius: 4px;
+        background: #e2e8f0;
+        outline: none;
+      }
+      .custom-range::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #4fc3f7;
+        cursor: pointer;
+        border: 2px solid white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+      .custom-range::-moz-range-thumb {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #4fc3f7;
+        cursor: pointer;
+        border: 2px solid white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+      .custom-switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 24px;
+      }
+      .custom-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .switch-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #e2e8f0;
+        transition: 0.4s;
+        border-radius: 34px;
+      }
+      .switch-slider:before {
+        position: absolute;
+        content: "";
+        height: 18px;
+        width: 18px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+      input:checked + .switch-slider {
+        background-color: #4fc3f7;
+      }
+      input:checked + .switch-slider:before {
+        transform: translateX(26px);
+      }
+      .filter-button.active {
+        background-color: #1a237e;
+        color: white;
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+      }
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .parallax {
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      .lightbox {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        align-items: center;
+        justify-content: center;
+      }
+      .lightbox-content {
+        max-width: 90%;
+        max-height: 90%;
+      }
+      .lightbox-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        color: white;
+        font-size: 30px;
+        cursor: pointer;
+      }
+      .back-to-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 99;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+      }
+      .back-to-top.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+      /* From Uiverse.io by aguerquin */
+      .button-icon {
+        display: flex;
+        border: 3px #fff solid;
+        width: fit-content;
+        height: fit-content;
+        cursor: pointer;
+      }
+
+      .icon {
+        background-color: #fff;
+        padding: 10px 10px 5px 10px;
+      }
+
+      .icon svg {
+        width: 25px;
+        height: 25px;
+      }
+
+      .cube {
+        transition: all 0.4s;
+        transform-style: preserve-3d;
+        width: 200px;
+        height: 20px;
+      }
+
+      .button-icon:hover {
+        border-color: #ff98a2;
+      }
+
+      .button-icon:hover .cube {
+        transform: rotateX(90deg);
+      }
+
+      .side {
+        position: absolute;
+        height: 47px;
+        width: 200px;
+        display: flex;
+        font-size: 0.8em;
+        justify-content: center;
+        align-items: center;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: bold;
+      }
+
+      .top {
+        background: #ff98a2;
+        color: #fff;
+        transform: rotateX(-90deg) translate3d(0, 13.5px, 2em);
+      }
+
+      .front {
+        background: #222229;
+        color: #fff;
+        transform: translate3d(0, 0, 1em);
+      }
+      /* From Uiverse.io by RiccardoRapelli */
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+      }
+
+      .switch #input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #2196f3;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+        z-index: 0;
+        overflow: hidden;
+      }
+
+      .sun-moon {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: yellow;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+      }
+
+      #input:checked + .slider {
+        background-color: black;
+      }
+
+      #input:focus + .slider {
+        box-shadow: 0 0 1px #2196f3;
+      }
+
+      #input:checked + .slider .sun-moon {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+        background-color: white;
+        -webkit-animation: rotate-center 0.6s ease-in-out both;
+        animation: rotate-center 0.6s ease-in-out both;
+      }
+
+      .moon-dot {
+        opacity: 0;
+        transition: 0.4s;
+        fill: gray;
+      }
+
+      #input:checked + .slider .sun-moon .moon-dot {
+        opacity: 1;
+      }
+
+      .slider.round {
+        border-radius: 34px;
+      }
+
+      .slider.round .sun-moon {
+        border-radius: 50%;
+      }
+
+      #moon-dot-1 {
+        left: 10px;
+        top: 3px;
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        z-index: 4;
+      }
+
+      #moon-dot-2 {
+        left: 2px;
+        top: 10px;
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        z-index: 4;
+      }
+
+      #moon-dot-3 {
+        left: 16px;
+        top: 18px;
+        position: absolute;
+        width: 3px;
+        height: 3px;
+        z-index: 4;
+      }
+
+      #light-ray-1 {
+        left: -8px;
+        top: -8px;
+        position: absolute;
+        width: 43px;
+        height: 43px;
+        z-index: -1;
+        fill: white;
+        opacity: 10%;
+      }
+
+      #light-ray-2 {
+        left: -50%;
+        top: -50%;
+        position: absolute;
+        width: 55px;
+        height: 55px;
+        z-index: -1;
+        fill: white;
+        opacity: 10%;
+      }
+
+      #light-ray-3 {
+        left: -18px;
+        top: -18px;
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        z-index: -1;
+        fill: white;
+        opacity: 10%;
+      }
+
+      .cloud-light {
+        position: absolute;
+        fill: #eee;
+        animation-name: cloud-move;
+        animation-duration: 6s;
+        animation-iteration-count: infinite;
+      }
+
+      .cloud-dark {
+        position: absolute;
+        fill: #ccc;
+        animation-name: cloud-move;
+        animation-duration: 6s;
+        animation-iteration-count: infinite;
+        animation-delay: 1s;
+      }
+
+      #cloud-1 {
+        left: 30px;
+        top: 15px;
+        width: 40px;
+      }
+
+      #cloud-2 {
+        left: 44px;
+        top: 10px;
+        width: 20px;
+      }
+
+      #cloud-3 {
+        left: 18px;
+        top: 24px;
+        width: 30px;
+      }
+
+      #cloud-4 {
+        left: 36px;
+        top: 18px;
+        width: 40px;
+      }
+
+      #cloud-5 {
+        left: 48px;
+        top: 14px;
+        width: 20px;
+      }
+
+      #cloud-6 {
+        left: 22px;
+        top: 26px;
+        width: 30px;
+      }
+
+      @keyframes cloud-move {
+        0% {
+          transform: translateX(0px);
+        }
+
+        40% {
+          transform: translateX(4px);
+        }
+
+        80% {
+          transform: translateX(-4px);
+        }
+
+        100% {
+          transform: translateX(0px);
+        }
+      }
+
+      .stars {
+        transform: translateY(-32px);
+        opacity: 0;
+        transition: 0.4s;
+      }
+
+      .star {
+        fill: white;
+        position: absolute;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+        animation-name: star-twinkle;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+      }
+
+      #input:checked + .slider .stars {
+        -webkit-transform: translateY(0);
+        -ms-transform: translateY(0);
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      #star-1 {
+        width: 20px;
+        top: 2px;
+        left: 3px;
+        animation-delay: 0.3s;
+      }
+
+      #star-2 {
+        width: 6px;
+        top: 16px;
+        left: 3px;
+      }
+
+      #star-3 {
+        width: 12px;
+        top: 20px;
+        left: 10px;
+        animation-delay: 0.6s;
+      }
+
+      #star-4 {
+        width: 18px;
+        top: 0px;
+        left: 18px;
+        animation-delay: 1.3s;
+      }
+
+      @keyframes star-twinkle {
+        0% {
+          transform: scale(1);
+        }
+
+        40% {
+          transform: scale(1.2);
+        }
+
+        80% {
+          transform: scale(0.8);
+        }
+
+        100% {
+          transform: scale(1);
+        }
+      }
+    </style>
+    <link
+      href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"
+      rel="stylesheet"
+    />
+  </head>
+  <script>
+    // Dark mode toggle
+    const toggle = document.getElementById("input");
+    toggle.addEventListener("change", () => {
+      document.body.classList.toggle("dark", toggle.checked);
+    });
+
+    // Mobile menu toggle
+    const mobileBtn = document.getElementById("mobile-menu-button");
+    const mobileMenu = document.getElementById("mobile-menu");
+    mobileBtn.addEventListener("click", () => {
+      mobileMenu.classList.toggle("active");
+    });
+  </script>
+  <body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav
+      id="navbar"
+      class="navbar fixed w-full z-50 transition-all duration-300"
+    >
+      <div
+        class="container mx-auto px-4 py-4 flex justify-between items-center"
+      >
+        <a
+          href="#"
+          class="block w-32 h-12 bg-contain bg-no-repeat bg-center"
+          style="
+            background-image: url('WhatsApp\ Image\ 2025-05-24\ at\ 23.07.12_ac3b897c.jpg');
+          "
+        >
+          <span class="sr-only">AeroBMSCE</span>
+          <!-- for screen readers --></a
+        >
+        <div class="hidden md:flex items-center space-x-8">
+          <!-- From Uiverse.io by RiccardoRapelli -->
+          <label class="switch mr-4">
+            <input id="input" type="checkbox" />
+            <div class="slider round">
+              <div class="sun-moon">
+                <!-- Moon Dots -->
+                <svg id="moon-dot-1" class="moon-dot" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="50"></circle>
+                </svg>
+                <svg id="moon-dot-2" class="moon-dot" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="50"></circle>
+                </svg>
+                <svg id="moon-dot-3" class="moon-dot" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="50"></circle>
+                </svg>
+
+                <!-- Light Rays -->
+                <svg id="light-ray-1" class="light-ray" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="50"></circle>
+                </svg>
+                <svg id="light-ray-2" class="light-ray" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="50"></circle>
+                </svg>
+                <svg id="light-ray-3" class="light-ray" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="50"></circle>
+                </svg>
+
+                <!-- Clouds -->
+                <svg id="cloud-1" class="cloud-dark" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="50"></circle>
+                </svg>
+                <svg id="cloud-2" class="cloud-dark" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="50"></circle>
+                </svg>
+                <svg id="cloud-3" class="cloud-dark" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="50"></circle>
+                </svg>
+                <svg id="cloud-4" class="cloud-light" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="50"></circle>
+                </svg>
+                <svg id="cloud-5" class="cloud-light" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="50"></circle>
+                </svg>
+                <svg id="cloud-6" class="cloud-light" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="50"></circle>
+                </svg>
+              </div>
+              <div class="stars">
+                <svg id="star-1" class="star" viewBox="0 0 20 20">
+                  <path
+                    d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"
+                  ></path>
+                </svg>
+                <svg id="star-2" class="star" viewBox="0 0 20 20">
+                  <path
+                    d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"
+                  ></path>
+                </svg>
+                <svg id="star-3" class="star" viewBox="0 0 20 20">
+                  <path
+                    d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"
+                  ></path>
+                </svg>
+                <svg id="star-4" class="star" viewBox="0 0 20 20">
+                  <path
+                    d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+          </label>
+
+          <a
+            href="#home"
+            class="text-white hover:text-secondary transition-colors"
+            >Home</a
+          >
+          <a
+            href="#about"
+            class="text-white hover:text-secondary transition-colors"
+            >About</a
+          >
+          <a
+            href="#teams"
+            class="text-white hover:text-secondary transition-colors"
+            >Teams</a
+          >
+          <a
+            href="#gallery"
+            class="text-white hover:text-secondary transition-colors"
+            >Gallery</a
+          >
+          <a
+            href="#contact"
+            class="text-white hover:text-secondary transition-colors"
+            >Contact</a
+          >
+        </div>
+        <div class="md:hidden w-8 h-8 flex items-center justify-center">
+          <i class="ri-menu-line text-white ri-2x" id="mobile-menu-button"></i>
+        </div>
+      </div>
+      <!-- Mobile Menu -->
+      <div
+        id="mobile-menu"
+        class="hidden bg-primary fixed top-16 left-0 w-full py-4 px-4 shadow-lg"
+      >
+        <div class="flex flex-col space-y-4">
+          <a
+            href="#home"
+            class="text-white hover:text-secondary transition-colors py-2"
+            >Home</a
+          >
+          <a
+            href="#about"
+            class="text-white hover:text-secondary transition-colors py-2"
+            >About</a
+          >
+          <a
+            href="#teams"
+            class="text-white hover:text-secondary transition-colors py-2"
+            >Teams</a
+          >
+          <a
+            href="#gallery"
+            class="text-white hover:text-secondary transition-colors py-2"
+            >Gallery</a
+          >
+          <a
+            href="#contact"
+            class="text-white hover:text-secondary transition-colors py-2"
+            >Contact</a
+          >
+        </div>
+      </div>
+    </nav>
+    <!-- Hero Section -->
+    <section id="home" class="hero-section flex items-center justify-center">
+      <div class="hero-overlay"></div>
+      <div
+        style="
+          background-image: url('https://readdy.ai/api/search-image?query=aerial%20view%20of%20drone%20flying%20over%20beautiful%20landscape%20with%20mountains%20and%20lakes%2C%20cinematic%20shot%2C%20blue%20sky%20with%20clouds%2C%20professional%20photography%2C%20high%20resolution%2C%20dramatic%20lighting&width=1920&height=1080&seq=drone1&orientation=landscape');
+        "
+        class="hero-video absolute inset-0 bg-cover bg-center"
+      ></div>
+      <div class="container mx-auto px-4 z-10 text-center">
+        <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 reveal">
+          Experience the Freedom of Flight
+        </h1>
+        <p
+          class="text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto reveal"
+        >
+          Join the Ultimate RC & Drone Community
+        </p>
+        <button
+          class="bg-[#00E5FF] hover:bg-blue-400 text-black font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 reveal whitespace-nowrap"
+        >
+          Take Flight
+        </button>
+      </div>
+      <div
+        class="absolute bottom-10 left-1/2 transform -translate-x-1/2 scroll-down"
+      >
+        <div class="w-10 h-10 flex items-center justify-center text-white">
+          <i class="ri-arrow-down-line ri-2x"></i>
+        </div>
+      </div>
+    </section>
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-bold text-center text-[#FF69B4] mb-16">
+            Our Mission
+          </h2>
+          <div class="w-24 h-1 bg-secondary mx-auto mb-8 reveal"></div>
+          <p class="text-lg text-gray-700 max-w-3xl mx-auto reveal">
+            Founded in 2018, AeroBMSCE has been dedicated to bringing together
+            enthusiasts of aeromodelling, drones, and RC planes. Our passion is
+            to create a community where innovation meets the sky.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div class="reveal">
+            <div class="rounded-lg overflow-hidden shadow-xl">
+              <img
+                src="https://readdy.ai/api/search-image?query=group%20of%20diverse%20people%20with%20RC%20planes%20and%20drones%20in%20an%20open%20field%2C%20sunny%20day%2C%20enthusiastic%20faces%2C%20community%20event%2C%20high-quality%20professional%20photography%2C%20people%20of%20different%20ages%20and%20backgrounds&width=600&height=400&seq=community1&orientation=landscape"
+                alt="Aeromodelling Community"
+                class="w-full h-auto object-cover object-top"
+              />
+            </div>
+          </div>
+          <div class="reveal">
+            <h3 class="text-2xl font-bold text-primary mb-4">
+              Building a Community of Flight Enthusiasts
+            </h3>
+            <p class="text-gray-700 mb-6">
+              At AeroBMSCE, we believe that the sky is not the limit, but just
+              the beginning. Our community brings together hobbyists,
+              professionals, and innovators who share a passion for aerial
+              technology and flight.
+            </p>
+            <p class="text-gray-700 mb-6">
+              We provide resources, training, and events that help our members
+              develop their skills, showcase their creations, and push the
+              boundaries of what's possible in aeromodelling.
+            </p>
+            <div class="flex flex-wrap gap-4">
+              <div class="flex items-center">
+                <div
+                  class="w-12 h-12 flex items-center justify-center bg-blue-100 rounded-full mr-3"
+                >
+                  <i class="ri-group-line text-primary ri-lg"></i>
+                </div>
+                <span class="text-gray-800 font-medium">50+ Members</span>
+              </div>
+              <div class="flex items-center">
+                <div
+                  class="w-12 h-12 flex items-center justify-center bg-blue-100 rounded-full mr-3"
+                >
+                  <i class="ri-calendar-event-line text-primary ri-lg"></i>
+                </div>
+                <span class="text-gray-800 font-medium">30+ Annual Events</span>
+              </div>
+              <div class="flex items-center">
+                <div
+                  class="w-12 h-12 flex items-center justify-center bg-blue-100 rounded-full mr-3"
+                >
+                  <i class="ri-trophy-line text-primary ri-lg"></i>
+                </div>
+                <span class="text-gray-800 font-medium">25 Championships</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Timeline -->
+        <div class="mt-24 reveal">
+          <h3
+            class="text-4xl font-bold text-center text-[#FF69B4] mb-16"
+            data-aos="fade-up"
+          >
+            Our Journey
+          </h3>
+
+          <div class="relative">
+            <!-- Timeline Line -->
+            <div
+              class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gray-800 dark:bg-gray-200"
+            ></div>
+            <!-- Timeline Items -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 relative">
+              <!-- Item 1 -->
+              <div
+                class="md:col-start-1 md:text-right reveal"
+                data-aos="fade-right"
+                data-aos-delay="100"
+              >
+                <div
+                  class="bg-gray-900 dark:bg-white p-6 rounded-lg shadow-lg border border-gray-800 dark:border-gray-300 relative"
+                >
+                  <div
+                    class="absolute top-1/2 -right-4 md:block hidden transform -translate-y-1/2 w-8 h-8 bg-gray-700 dark:bg-gray-100 rounded-full border-4 border-gray-900 dark:border-white z-10"
+                  ></div>
+                  <h4
+                    class="text-xl font-bold text-gray-100 dark:text-gray-900 mb-2"
+                  >
+                    2018
+                  </h4>
+                  <p class="text-gray-300 dark:text-gray-800">
+                    Founded by a group of 5 aviation enthusiasts from BMSCE with
+                    a shared vision to create an inclusive CLUB for aerial
+                    hobbyists.
+                  </p>
+                </div>
+              </div>
+              <div class="md:col-start-2 hidden md:block"></div>
+              <!-- Item 2 -->
+              <div class="md:col-start-1 hidden md:block"></div>
+              <div
+                class="md:col-start-2 reveal"
+                data-aos="fade-left"
+                data-aos-delay="200"
+              >
+                <div
+                  class="bg-gray-900 dark:bg-white p-6 rounded-lg shadow-lg border border-gray-800 dark:border-gray-300 relative"
+                >
+                  <div
+                    class="absolute top-1/2 -left-4 md:block hidden transform -translate-y-1/2 w-8 h-8 bg-gray-700 dark:bg-gray-100 rounded-full border-4 border-gray-900 dark:border-white z-10"
+                  ></div>
+                  <h4
+                    class="text-xl font-bold text-gray-100 dark:text-gray-900 mb-2"
+                  >
+                    2020
+                  </h4>
+                  <p class="text-gray-300 dark:text-gray-800">
+                    Expanded to 10+ members and hosted our first regional drone
+                    racing championship with participants from different states.
+                  </p>
+                </div>
+              </div>
+              <!-- Item 3 -->
+              <div
+                class="md:col-start-1 md:text-right reveal"
+                data-aos="fade-right"
+                data-aos-delay="300"
+              >
+                <div
+                  class="bg-gray-900 dark:bg-white p-6 rounded-lg shadow-lg border border-gray-800 dark:border-gray-300 relative"
+                >
+                  <div
+                    class="absolute top-1/2 -right-4 md:block hidden transform -translate-y-1/2 w-8 h-8 bg-gray-700 dark:bg-gray-100 rounded-full border-4 border-gray-900 dark:border-white z-10"
+                  ></div>
+                  <h4
+                    class="text-xl font-bold text-gray-100 dark:text-gray-900 mb-2"
+                  >
+                    2022
+                  </h4>
+                  <p class="text-gray-300 dark:text-gray-800">
+                    Launched our exclusive Club, introducing aeromodelling to
+                    over 200+ students across the entire college.
+                  </p>
+                </div>
+              </div>
+              <div class="md:col-start-2 hidden md:block"></div>
+              <!-- Item 4 -->
+              <div class="md:col-start-1 hidden md:block"></div>
+              <div
+                class="md:col-start-2 reveal"
+                data-aos="fade-left"
+                data-aos-delay="400"
+              >
+                <div
+                  class="bg-gray-900 dark:bg-white p-6 rounded-lg shadow-lg border border-gray-800 dark:border-gray-300 relative"
+                >
+                  <div
+                    class="absolute top-1/2 -left-4 md:block hidden transform -translate-y-1/2 w-8 h-8 bg-gray-700 dark:bg-gray-100 rounded-full border-4 border-gray-900 dark:border-white z-10"
+                  ></div>
+                  <h4
+                    class="text-xl font-bold text-gray-100 dark:text-gray-900 mb-2"
+                  >
+                    2025
+                  </h4>
+                  <p class="text-gray-300 dark:text-gray-800">
+                    Today, with over 50 members, we're pioneering new
+                    technologies and participating in national competitions that
+                    push the boundaries of aerial innovation.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Teams Section -->
+    <section id="teams" class="py-20 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class=class="text-4xl font-bold text-center text-[#FF69B4] mb-16">
+            Meet the Squadrons
+          </h2>
+          <div class="w-24 h-1 bg-secondary mx-auto mb-8 reveal"></div>
+          <p class="text-lg text-gray-700 max-w-3xl mx-auto reveal">
+            Our community is organized into specialized teams, each focusing on
+            different aspects of aerial technology and flight.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <!-- Team Alpha -->
+          <div
+            class="team-card bg-white rounded-lg shadow-lg overflow-hidden reveal"
+          >
+            <div class="p-1 bg-gradient-to-r from-blue-500 to-cyan-400">
+              <div class="bg-white p-6">
+                <div
+                  class="w-24 h-24 mx-auto bg-blue-100 rounded-full flex items-center justify-center mb-4"
+                >
+                  <i class="ri-rocket-line text-primary ri-2x"></i>
+                </div>
+                <h3 class="text-xl font-bold text-primary text-center mb-2">
+                  Team Alpha
+                </h3>
+                <p class="text-gray-700 text-center mb-6">
+                  Specializing in high-performance racing drones and competitive
+                  flight techniques.
+                </p>
+                <div class="flex justify-center">
+                  <button
+                    class="flex items-center text-secondary hover:text-primary transition-colors font-medium whitespace-nowrap"
+                  >
+                    View Details
+                    <i class="ri-arrow-right-line ml-1"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Team Beta -->
+          <div
+            class="team-card bg-white rounded-lg shadow-lg overflow-hidden reveal"
+          >
+            <div class="p-1 bg-gradient-to-r from-purple-500 to-blue-500">
+              <div class="bg-white p-6">
+                <div
+                  class="w-24 h-24 mx-auto bg-purple-100 rounded-full flex items-center justify-center mb-4"
+                >
+                  <i class="ri-film-line text-primary ri-2x"></i>
+                </div>
+                <h3 class="text-xl font-bold text-primary text-center mb-2">
+                  Team Beta
+                </h3>
+                <p class="text-gray-700 text-center mb-6">
+                  Focused on aerial photography, cinematography, and
+                  professional imaging techniques.
+                </p>
+                <div class="flex justify-center">
+                  <button
+                    class="flex items-center text-secondary hover:text-primary transition-colors font-medium whitespace-nowrap"
+                  >
+                    View Details
+                    <i class="ri-arrow-right-line ml-1"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Team Charlie -->
+          <div
+            class="team-card bg-white rounded-lg shadow-lg overflow-hidden reveal"
+          >
+            <div class="p-1 bg-gradient-to-r from-green-500 to-teal-400">
+              <div class="bg-white p-6">
+                <div
+                  class="w-24 h-24 mx-auto bg-green-100 rounded-full flex items-center justify-center mb-4"
+                >
+                  <i class="ri-tools-line text-primary ri-2x"></i>
+                </div>
+                <h3 class="text-xl font-bold text-primary text-center mb-2">
+                  Team Charlie
+                </h3>
+                <p class="text-gray-700 text-center mb-6">
+                  Engineering and innovation team developing cutting-edge
+                  drone,UAV's and RC technologies.
+                </p>
+                <div class="flex justify-center">
+                  <button
+                    class="flex items-center text-secondary hover:text-primary transition-colors font-medium whitespace-nowrap"
+                  >
+                    View Details
+                    <i class="ri-arrow-right-line ml-1"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Team Delta -->
+          <div
+            class="team-card bg-white rounded-lg shadow-lg overflow-hidden reveal"
+          >
+            <div class="p-1 bg-gradient-to-r from-orange-500 to-amber-400">
+              <div class="bg-white p-6">
+                <div
+                  class="w-24 h-24 mx-auto bg-orange-100 rounded-full flex items-center justify-center mb-4"
+                >
+                  <i class="ri-user-star-line text-primary ri-2x"></i>
+                </div>
+                <h3 class="text-xl font-bold text-primary text-center mb-2">
+                  Team Delta
+                </h3>
+                <p class="text-gray-700 text-center mb-6">
+                  Youth education and community outreach, bringing aerial
+                  technology to the next generation.
+                </p>
+                <div class="flex justify-center">
+                  <button
+                    class="flex items-center text-secondary hover:text-primary transition-colors font-medium whitespace-nowrap"
+                  >
+                    View Details
+                    <i class="ri-arrow-right-line ml-1"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Parallax Section -->
+    <section
+      class="parallax py-24 text-white"
+      style="
+        background-image: url('https://readdy.ai/api/search-image?query=dramatic%20aerial%20view%20of%20RC%20planes%20flying%20through%20clouds%20at%20sunset%2C%20cinematic%20lighting%2C%20golden%20hour%2C%20silhouettes%20against%20colorful%20sky%2C%20professional%20photography%2C%20high%20resolution%2C%20epic%20scale&width=1920&height=600&seq=parallax1&orientation=landscape');
+      "
+    >
+      <div class="bg-black bg-opacity-50 py-24">
+        <div class="container mx-auto px-4 text-center">
+          <h2 class="text-4xl font-bold mb-6 reveal">
+            Join Our AeroBMSCE Tech. Club
+          </h2>
+          <p class="text-xl max-w-2xl mx-auto mb-8 reveal">
+            Experience the thrill of flight designing, aircrafts, drones. Learn
+            from the expertise!!
+          </p>
+          <button
+            class="bg-[#FF6E40] hover:bg-orange-500 text-white font-bold py-3 px-8 rounded-button transition-all duration-300 transform hover:scale-105 reveal whitespace-nowrap"
+          >
+            Register Now
+          </button>
+        </div>
+      </div>
+    </section>
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="class="text-4xl font-bold text-center text-[#FF69B4] mb-16"">
+            Media Gallery
+          </h2>
+          <div class="w-24 h-1 bg-secondary mx-auto mb-8 reveal"></div>
+          <p class="text-lg text-gray-700 max-w-3xl mx-auto reveal">
+            Explore our collection of stunning aerial photography, videos, and
+            event highlights.
+          </p>
+        </div>
+        <!-- Filter Buttons -->
+        <div class="flex flex-wrap justify-center gap-4 mb-12 reveal">
+          <button
+            class="filter-button active bg-gray-200 hover:bg-primary hover:text-white px-6 py-2 rounded-full transition-colors duration-300 whitespace-nowrap"
+            data-filter="all"
+          >
+            All
+          </button>
+          <button
+            class="filter-button bg-gray-200 hover:bg-primary hover:text-white px-6 py-2 rounded-full transition-colors duration-300 whitespace-nowrap"
+            data-filter="drones"
+          >
+            Drones
+          </button>
+          <button
+            class="filter-button bg-gray-200 hover:bg-primary hover:text-white px-6 py-2 rounded-full transition-colors duration-300 whitespace-nowrap"
+            data-filter="rc-planes"
+          >
+            RC Planes
+          </button>
+          <button
+            class="filter-button bg-gray-200 hover:bg-primary hover:text-white px-6 py-2 rounded-full transition-colors duration-300 whitespace-nowrap"
+            data-filter="events"
+          >
+            Events
+          </button>
+        </div>
+        <!-- Gallery Grid -->
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reveal"
+        >
+          <!-- Item 1 -->
+          <div
+            class="gallery-item rounded-lg overflow-hidden shadow-lg"
+            data-category="drones"
+          >
+            <img
+              src="https://readdy.ai/api/search-image?query=professional%20racing%20drone%20flying%20through%20obstacle%20course%2C%20high%20speed%20motion%20blur%2C%20dynamic%20angle%2C%20vibrant%20colors%2C%20technical%20details%20visible%2C%20sharp%20focus%20on%20drone%2C%20blurred%20background%2C%20competition%20setting&width=600&height=400&seq=drone2&orientation=landscape"
+              alt="Racing Drone"
+              class="w-full h-64 object-cover object-top"
+            />
+            <div class="gallery-overlay">
+              <h4 class="text-white text-lg font-bold">
+                Championship Racing Drone
+              </h4>
+              <p class="text-gray-300">National Drone Racing Finals 2024</p>
+            </div>
+          </div>
+          <!-- Item 2 -->
+          <div
+            class="gallery-item rounded-lg overflow-hidden shadow-lg"
+            data-category="rc-planes"
+          >
+            <img
+              src="WhatsApp Image 2025-05-24 at 22.10.07_026d5cbb.jpg"
+              alt="RC Plane"
+              class="w-full h-64 object-cover object-top"
+            />
+            <div class="gallery-overlay">
+              <h4 class="text-white text-lg font-bold">Aerobatic RC Plane</h4>
+              <p class="text-gray-300">Custom-built for precision maneuvers</p>
+            </div>
+          </div>
+          <!-- Item 3 -->
+          <div
+            class="gallery-item rounded-lg overflow-hidden shadow-lg"
+            data-category="events"
+          >
+            <img
+              src="https://readdy.ai/api/search-image?query=large%20outdoor%20drone%20event%20with%20many%20people%20watching%2C%20tents%20and%20displays%20set%20up%2C%20multiple%20drones%20visible%20in%20sky%2C%20sunny%20day%2C%20festival%20atmosphere%2C%20professional%20event%20photography&width=600&height=400&seq=event1&orientation=landscape"
+              alt="Drone Festival"
+              class="w-full h-64 object-cover object-top"
+            />
+            <div class="gallery-overlay">
+              <h4 class="text-white text-lg font-bold">
+                Annual Drone Festival
+              </h4>
+              <p class="text-gray-300">
+                Over 2,000 attendees at our flagship event
+              </p>
+            </div>
+          </div>
+          <!-- Item 4 -->
+          <div
+            class="gallery-item rounded-lg overflow-hidden shadow-lg"
+            data-category="drones"
+          >
+            <img
+              src="https://readdy.ai/api/search-image?query=professional%20camera%20drone%20hovering%20over%20scenic%20landscape%2C%20mountains%20and%20lake%20visible%20below%2C%20high-end%20camera%20gimbal%20visible%2C%20cinematic%20composition%2C%20perfect%20lighting%2C%20aerial%20photography&width=600&height=400&seq=drone3&orientation=landscape"
+              alt="Camera Drone"
+              class="w-full h-64 object-cover object-top"
+            />
+            <div class="gallery-overlay">
+              <h4 class="text-white text-lg font-bold">
+                Professional Camera Drone
+              </h4>
+              <p class="text-gray-300">Used for documentary filmmaking</p>
+            </div>
+          </div>
+          <!-- Item 5 -->
+          <div
+            class="gallery-item rounded-lg overflow-hidden shadow-lg"
+            data-category="rc-planes"
+          >
+            <img
+              src="https://readdy.ai/api/search-image?query=close-up%20of%20RC%20plane%20being%20assembled%2C%20detailed%20view%20of%20electronics%20and%20mechanical%20components%2C%20hands%20working%20on%20the%20plane%2C%20workshop%20setting%2C%20technical%20details%20visible%2C%20professional%20photography&width=600&height=400&seq=plane2&orientation=landscape"
+              alt="RC Plane Assembly"
+              class="w-full h-64 object-cover object-top"
+            />
+            <div class="gallery-overlay">
+              <h4 class="text-white text-lg font-bold">RC Plane Workshop</h4>
+              <p class="text-gray-300">Building custom aircraft from scratch</p>
+            </div>
+          </div>
+          <!-- Item 6 -->
+          <div
+            class="gallery-item rounded-lg overflow-hidden shadow-lg"
+            data-category="events"
+          >
+            <img
+              src="https://readdy.ai/api/search-image?query=young%20diverse%20group%20of%20students%20learning%20about%20drone%20technology%2C%20classroom%20setting%2C%20instructor%20showing%20drone%20components%2C%20engaged%20faces%2C%20educational%20environment%2C%20professional%20photography&width=600&height=400&seq=event2&orientation=landscape"
+              alt="Youth Workshop"
+              class="w-full h-64 object-cover object-top"
+            />
+            <div class="gallery-overlay">
+              <h4 class="text-white text-lg font-bold">
+                Drone Display Workshop
+              </h4>
+              <p class="text-gray-300">
+                Introducing aerial technology to students
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="text-center mt-12 reveal">
+          <button
+            class="bg-secondary hover:bg-blue-400 text-white font-bold py-3 px-8 rounded-button transition-all duration-300 whitespace-nowrap"
+          >
+            View Full Gallery
+          </button>
+        </div>
+      </div>
+    </section>
+    <!-- Stats Section -->
+    <section class="py-20 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div class="bg-white p-8 rounded-lg shadow-lg text-center reveal">
+            <div
+              class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4"
+            >
+              <i class="ri-user-line text-primary ri-xl"></i>
+            </div>
+            <h3 class="text-4xl font-bold text-primary mb-2">50+</h3>
+            <p class="text-gray-700">Active Members</p>
+          </div>
+          <div class="bg-white p-8 rounded-lg shadow-lg text-center reveal">
+            <div
+              class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4"
+            >
+              <i class="ri-map-pin-line text-primary ri-xl"></i>
+            </div>
+            <h3 class="text-4xl font-bold text-primary mb-2">4</h3>
+            <p class="text-gray-700">States Represented</p>
+          </div>
+          <div class="bg-white p-8 rounded-lg shadow-lg text-center reveal">
+            <div
+              class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4"
+            >
+              <i class="ri-calendar-event-line text-primary ri-xl"></i>
+            </div>
+            <h3 class="text-4xl font-bold text-primary mb-2">30+</h3>
+            <p class="text-gray-700">Annual Events</p>
+          </div>
+          <div class="bg-white p-8 rounded-lg shadow-lg text-center reveal">
+            <div
+              class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4"
+            >
+              <i class="ri-flight-takeoff-line text-primary ri-xl"></i>
+            </div>
+            <h3 class="text-4xl font-bold text-primary mb-2">2,000+</h3>
+            <p class="text-gray-700">Flight Hours Logged</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-bold text-center text-[#FF69B4] mb-16">
+            Get In Touch
+          </h2>
+          <div class="w-24 h-1 bg-secondary mx-auto mb-8 reveal"></div>
+          <p class="text-lg text-gray-700 max-w-3xl mx-auto reveal">
+            Have questions about joining our community or attending our events?
+            Reach out to us!
+          </p>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div class="reveal">
+            <form class="bg-white p-8 rounded-lg shadow-lg">
+              <div class="mb-6">
+                <label for="name" class="block text-gray-700 font-medium mb-2"
+                  >Your Name</label
+                >
+                <input
+                  type="text"
+                  id="name"
+                  class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent transition-colors"
+                  placeholder="Enter your name"
+                />
+              </div>
+              <div class="mb-6">
+                <label for="email" class="block text-gray-700 font-medium mb-2"
+                  >Email Address</label
+                >
+                <input
+                  type="email"
+                  id="email"
+                  class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent transition-colors"
+                  placeholder="Enter your email"
+                />
+              </div>
+              <div class="mb-6">
+                <label
+                  for="subject"
+                  class="block text-gray-700 font-medium mb-2"
+                  >Domain</label
+                >
+                <input
+                  type="text"
+                  id="subject"
+                  class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent transition-colors"
+                  placeholder="Choose your domain? (e.g., Drones, RC Planes, Elecronics etc.)"
+                />
+              </div>
+              <div class="mb-6">
+                <label
+                  for="message"
+                  class="block text-gray-700 font-medium mb-2"
+                  >Message</label
+                >
+                <textarea
+                  id="message"
+                  rows="5"
+                  class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent transition-colors"
+                  placeholder="Your message"
+                ></textarea>
+              </div>
+              <div class="mb-6">
+                <label class="flex items-center">
+                  <input type="checkbox" class="mr-2" />
+                  <span class="text-gray-700"
+                    >Are you really passionate??⚡⚡</span
+                  >
+                </label>
+              </div>
+              <button
+                type="submit"
+                class="w-full bg-blue-700 dark:bg-blue-800 text-[#FFFF33] font-bold py-3 px-6 rounded-button transition-all duration-300 whitespace-nowrap hover:scale-105 ring-0 hover:ring-4 hover:ring-[#FF00FF] dark:hover:ring-[#FFFF33]"
+              >
+                Send Message
+              </button>
+            </form>
+          </div>
+          <div class="reveal">
+            <div class="bg-white p-8 rounded-lg shadow-lg h-full">
+              <h3 class="text-2xl font-bold text-primary mb-6">
+                Contact Information
+              </h3>
+              <div class="mb-8">
+                <div class="flex items-start mb-4">
+                  <div
+                    class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full mr-4 mt-1"
+                  >
+                    <i class="ri-map-pin-line text-primary"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-gray-800 mb-1">Work Space</h4>
+                    <p class="text-gray-700">
+                      Bull Temple Rd, Basavanagudi, Bengaluru 560019
+                    </p>
+                  </div>
+                </div>
+                <div class="flex items-start mb-4">
+                  <div
+                    class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full mr-4 mt-1"
+                  >
+                    <i class="ri-mail-line text-primary"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-gray-800 mb-1">Email</h4>
+                    <p class="text-gray-700">aeroclubbmsce@gmail.com</p>
+                  </div>
+                </div>
+                <div class="flex items-start mb-4">
+                  <div
+                    class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full mr-4 mt-1"
+                  >
+                    <i class="ri-phone-line text-primary"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-gray-800 mb-1">Phone</h4>
+                    <p class="text-gray-700">9876543210</p>
+                  </div>
+                </div>
+              </div>
+              <h3 class="text-2xl font-bold text-primary mb-4">Follow Us</h3>
+              <div class="flex space-x-4 mb-8">
+                <a
+                  href="#"
+                  class="w-10 h-10 flex items-center justify-center bg-blue-100 hover:bg-blue-200 rounded-full transition-colors"
+                >
+                  <i class="ri-facebook-fill text-primary"></i>
+                </a>
+                <a
+                  href="#"
+                  class="w-10 h-10 flex items-center justify-center bg-blue-100 hover:bg-blue-200 rounded-full transition-colors"
+                >
+                  <i class="ri-twitter-x-fill text-primary"></i>
+                </a>
+                <a
+                  href="#"
+                  class="w-10 h-10 flex items-center justify-center bg-blue-100 hover:bg-blue-200 rounded-full transition-colors"
+                >
+                  <i class="ri-instagram-line text-primary"></i>
+                </a>
+                <a
+                  href="#"
+                  class="w-10 h-10 flex items-center justify-center bg-blue-100 hover:bg-blue-200 rounded-full transition-colors"
+                >
+                  <i class="ri-youtube-fill text-primary"></i>
+                </a>
+              </div>
+              <h3 class="text-2xl font-bold text-primary mb-4">Location</h3>
+              <div
+                class="rounded-lg overflow-hidden h-64 bg-cover bg-center"
+                style="
+                  background-image: url('WhatsApp\ Image\ 2025-05-25\ at\ 17.36.43_21d219d1.jpg');
+                "
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Newsletter Section -->
+    <section class="py-20 bg-primary text-blue">
+      <div class="container mx-auto px-4 text-center">
+        <h2 class="text-4xl font-bold text-center text-[#FF69B4] mb-16">Stay Updated</h2>
+        <p class="text-lg max-w-2xl mx-auto mb-8 reveal">
+          Join our exclusive Technical club and explore your potential in any of
+          the subsystems.
+        </p>
+
+        <form class="max-w-md mx-auto flex flex-col sm:flex-row gap-4 reveal">
+          <input
+            type="email"
+            placeholder="Your email address"
+            class="flex-grow px-4 py-3 rounded-l-lg sm:rounded-l-lg sm:rounded-r-none rounded-r-lg text-gray-800 focus:outline-none"
+          />
+          <button
+            href="#"
+            class="bg-[#FF6E40] hover:bg-orange-500 text-white font-bold py-3 px-6 rounded-r-lg sm:rounded-r-lg sm:rounded-l-none rounded-l-lg transition-colors duration-300 whitespace-nowrap"
+          >
+            Join Us
+          </button>
+        </form>
+      </div>
+    </section>
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+          <div>
+            <h3 class="text-xl font-bold mb-4">AeroBMSCE</h3>
+            <p class="text-gray-400 mb-4">
+              Bringing together enthusiasts of aeromodelling, drones, and RC
+              planes since 2018.
+            </p>
+            <div class="flex space-x-4">
+              <a
+                href="#"
+                class="text-gray-400 hover:text-white transition-colors"
+              >
+                <i class="ri-facebook-fill"></i>
+              </a>
+              <a
+                href="#"
+                class="text-gray-400 hover:text-white transition-colors"
+              >
+                <i class="ri-twitter-x-fill"></i>
+              </a>
+              <a
+                href="#"
+                class="text-gray-400 hover:text-white transition-colors"
+              >
+                <i class="ri-instagram-line"></i>
+              </a>
+              <a
+                href="#"
+                class="text-gray-400 hover:text-white transition-colors"
+              >
+                <i class="ri-youtube-fill"></i>
+              </a>
+            </div>
+          </div>
+          <a
+            href="https://github.com/Silver-Spider/Gladiators"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-block no-underline"
+          >
+            <!-- From Uiverse.io by aguerquin -->
+            <div class="button-icon">
+              <div class="icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 0.296997C5.37 0.296997 0 5.67 0 12.297C0 17.6 3.438 22.097 8.205 23.682C8.805 23.795 9.025 23.424 9.025 23.105C9.025 22.82 9.015 22.065 9.01 21.065C5.672 21.789 4.968 19.455 4.968 19.455C4.422 18.07 3.633 17.7 3.633 17.7C2.546 16.956 3.717 16.971 3.717 16.971C4.922 17.055 5.555 18.207 5.555 18.207C6.625 20.042 8.364 19.512 9.05 19.205C9.158 18.429 9.467 17.9 9.81 17.6C7.145 17.3 4.344 16.268 4.344 11.67C4.344 10.36 4.809 9.29 5.579 8.45C5.444 8.147 5.039 6.927 5.684 5.274C5.684 5.274 6.689 4.952 8.984 6.504C9.944 6.237 10.964 6.105 11.984 6.099C13.004 6.105 14.024 6.237 14.984 6.504C17.264 4.952 18.269 5.274 18.269 5.274C18.914 6.927 18.509 8.147 18.389 8.45C19.154 9.29 19.619 10.36 19.619 11.67C19.619 16.28 16.814 17.295 14.144 17.59C14.564 17.95 14.954 18.686 14.954 19.81C14.954 21.416 14.939 22.706 14.939 23.096C14.939 23.411 15.149 23.786 15.764 23.666C20.565 22.092 24 17.592 24 12.297C24 5.67 18.627 0.296997 12 0.296997Z"
+                    fill="#222229"
+                  ></path>
+                </svg>
+              </div>
+              <div class="cube">
+                <span class="side front">hover me</span>
+                <span class="side top">check it on github</span>
+              </div>
+            </div>
+          </a>
+          <div>
+            <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+            <ul class="space-y-2">
+              <li>
+                <a
+                  href="#home"
+                  class="text-gray-400 hover:text-white transition-colors"
+                  >Home</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#about"
+                  class="text-gray-400 hover:text-white transition-colors"
+                  >About Us</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#teams"
+                  class="text-gray-400 hover:text-white transition-colors"
+                  >Our Teams</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#gallery"
+                  class="text-gray-400 hover:text-white transition-colors"
+                  >Gallery</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#contact"
+                  class="text-gray-400 hover:text-white transition-colors"
+                  >Contact</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-4">Resources</h3>
+            <ul class="space-y-2">
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-colors"
+                  >Events Calendar</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-colors"
+                  >Membership</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-colors"
+                  >Training Programs</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-colors"
+                  >Equipment Guide</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-colors"
+                  >Safety Guidelines</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-4">Contact Us</h3>
+            <ul class="space-y-2">
+              <li class="flex items-start">
+                <i class="ri-map-pin-line mr-2 mt-1"></i>
+                <span class="text-gray-400"
+                  >Bull Temple Rd, Basavanagudi, Bengaluru 560019</span
+                >
+              </li>
+              <li class="flex items-start">
+                <i class="ri-mail-line mr-2 mt-1"></i>
+                <span class="text-gray-400">aeroclubbmsce@gmail.com</span>
+              </li>
+              <li class="flex items-start">
+                <i class="ri-phone-line mr-2 mt-1"></i>
+                <span class="text-gray-400">9876543210</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div
+          class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center"
+        >
+          <p class="text-gray-400 mb-4 md:mb-0">
+            © 2025 AeroBMSCE. All rights reserved.
+          </p>
+          <div class="flex space-x-6">
+            <a href="#" class="text-gray-400 hover:text-white transition-colors"
+              >Privacy Policy</a
+            >
+            <a href="#" class="text-gray-400 hover:text-white transition-colors"
+              >Terms of Service</a
+            >
+            <a href="#" class="text-gray-400 hover:text-white transition-colors"
+              >Cookie Policy</a
+            >
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- Back to Top Button -->
+    <button
+      id="back-to-top"
+      class="back-to-top bg-primary hover:bg-blue-700 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all duration-300"
+    >
+      <i class="ri-arrow-up-line ri-lg"></i>
+    </button>
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox">
+      <span class="lightbox-close">&times;</span>
+      <img class="lightbox-content" id="lightbox-img" />
+    </div>
+    <!-- Scripts -->
+    <script id="theme-script">
+      document.addEventListener("DOMContentLoaded", function () {
+        const themeToggle = document.getElementById("theme-toggle");
+
+        // Check for saved theme preference or system preference
+        if (
+          localStorage.getItem("theme") === "dark" ||
+          (!localStorage.getItem("theme") &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches)
+        ) {
+          document.documentElement.classList.add("dark");
+        }
+        // Theme toggle functionality
+        themeToggle.addEventListener("click", function () {
+          if (document.documentElement.classList.contains("dark")) {
+            document.documentElement.classList.remove("dark");
+            localStorage.setItem("theme", "light");
+          } else {
+            document.documentElement.classList.add("dark");
+            localStorage.setItem("theme", "dark");
+          }
+        });
+      });
+    </script>
+    <script id="navbar-script">
+      document.addEventListener("DOMContentLoaded", function () {
+        const navbar = document.getElementById("navbar");
+        const mobileMenuButton = document.getElementById("mobile-menu-button");
+        const mobileMenu = document.getElementById("mobile-menu");
+        // Handle navbar background on scroll
+        window.addEventListener("scroll", function () {
+          if (window.scrollY > 50) {
+            navbar.classList.add("scrolled");
+          } else {
+            navbar.classList.remove("scrolled");
+          }
+        });
+        // Mobile menu toggle
+        mobileMenuButton.addEventListener("click", function () {
+          mobileMenu.classList.toggle("hidden");
+        });
+        // Close mobile menu when clicking on a link
+        const mobileLinks = mobileMenu.querySelectorAll("a");
+        mobileLinks.forEach((link) => {
+          link.addEventListener("click", function () {
+            mobileMenu.classList.add("hidden");
+          });
+        });
+      });
+    </script>
+    <script id="scroll-animation-script">
+      document.addEventListener("DOMContentLoaded", function () {
+        // Reveal elements on scroll
+        const revealElements = document.querySelectorAll(".reveal");
+        function checkReveal() {
+          const windowHeight = window.innerHeight;
+          const revealPoint = 150;
+          revealElements.forEach((element) => {
+            const elementTop = element.getBoundingClientRect().top;
+            if (elementTop < windowHeight - revealPoint) {
+              element.classList.add("active");
+            }
+          });
+        }
+        // Initial check
+        checkReveal();
+        // Check on scroll
+        window.addEventListener("scroll", checkReveal);
+        // Back to top button
+        const backToTopButton = document.getElementById("back-to-top");
+        function toggleBackToTopButton() {
+          if (window.scrollY > 300) {
+            backToTopButton.classList.add("visible");
+          } else {
+            backToTopButton.classList.remove("visible");
+          }
+        }
+        // Initial check
+        toggleBackToTopButton();
+        // Check on scroll
+        window.addEventListener("scroll", toggleBackToTopButton);
+        // Scroll to top when clicked
+        backToTopButton.addEventListener("click", function () {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+        });
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute("href");
+            if (targetId === "#") return;
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+              window.scrollTo({
+                top: targetElement.offsetTop - 80,
+                behavior: "smooth",
+              });
+            }
+          });
+        });
+      });
+    </script>
+    <script id="gallery-script">
+      document.addEventListener("DOMContentLoaded", function () {
+        // Gallery filtering
+        const filterButtons = document.querySelectorAll(".filter-button");
+        const galleryItems = document.querySelectorAll(".gallery-item");
+        filterButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            // Remove active class from all buttons
+            filterButtons.forEach((btn) => btn.classList.remove("active"));
+            // Add active class to clicked button
+            this.classList.add("active");
+            const filter = this.getAttribute("data-filter");
+            galleryItems.forEach((item) => {
+              if (
+                filter === "all" ||
+                item.getAttribute("data-category") === filter
+              ) {
+                item.style.display = "block";
+              } else {
+                item.style.display = "none";
+              }
+            });
+          });
+        });
+        // Lightbox functionality
+        const lightbox = document.getElementById("lightbox");
+        const lightboxImg = document.getElementById("lightbox-img");
+        const lightboxClose = document.querySelector(".lightbox-close");
+        galleryItems.forEach((item) => {
+          const img = item.querySelector("img");
+          img.addEventListener("click", function () {
+            lightboxImg.src = this.src;
+            lightbox.style.display = "flex";
+          });
+        });
+        lightboxClose.addEventListener("click", function () {
+          lightbox.style.display = "none";
+        });
+        // Close lightbox when clicking outside the image
+        lightbox.addEventListener("click", function (e) {
+          if (e.target === lightbox) {
+            lightbox.style.display = "none";
+          }
+        });
+      });
+    </script>
+    <script id="form-script">
+      document.addEventListener("DOMContentLoaded", function () {
+        const contactForm = document.querySelector("form");
+        contactForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+          // Simple form validation
+          const name = document.getElementById("name");
+          const email = document.getElementById("email");
+          const subject = document.getElementById("subject");
+          const message = document.getElementById("message");
+          let isValid = true;
+          if (!name.value.trim()) {
+            isValid = false;
+            name.classList.add("border-red-500");
+          } else {
+            name.classList.remove("border-red-500");
+          }
+          if (!email.value.trim() || !email.value.includes("@")) {
+            isValid = false;
+            email.classList.add("border-red-500");
+          } else {
+            email.classList.remove("border-red-500");
+          }
+          if (!subject.value.trim()) {
+            isValid = false;
+            subject.classList.add("border-red-500");
+          } else {
+            subject.classList.remove("border-red-500");
+          }
+          if (!message.value.trim()) {
+            isValid = false;
+            message.classList.add("border-red-500");
+          } else {
+            message.classList.remove("border-red-500");
+          }
+          if (isValid) {
+            // Simulate form submission
+            const submitButton = contactForm.querySelector(
+              'button[type="submit"]'
+            );
+            const originalText = submitButton.textContent;
+            submitButton.disabled = true;
+            submitButton.textContent = "Sending...";
+            // Simulate API call
+            setTimeout(() => {
+              alert("Message sent successfully!");
+              contactForm.reset();
+              submitButton.disabled = false;
+              submitButton.textContent = originalText;
+            }, 1500);
+          }
+        });
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        duration: 1000,
+        once: true,
+      });
+    </script>
+  </body>
+</html>
