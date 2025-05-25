@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -17,84 +16,35 @@
     />
     <script src="https://cdn.tailwindcss.com/3.4.16"></script>
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const toggleSwitch = document.getElementById("input");
-
-        if (localStorage.getItem("theme") === "dark") {
-          document.documentElement.classList.add("dark");
-          toggleSwitch.checked = true;
-        }
-
-        toggleSwitch.addEventListener("change", () => {
-          if (toggleSwitch.checked) {
-            document.documentElement.classList.add("dark");
-            localStorage.setItem("theme", "dark");
-          } else {
-            document.documentElement.classList.remove("dark");
-            localStorage.setItem("theme", "light");
-          }
-        });
-      });
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: { primary: "#1A237E", secondary: "#4FC3F7" },
+            borderRadius: {
+              none: "0px",
+              sm: "4px",
+              DEFAULT: "8px",
+              md: "12px",
+              lg: "16px",
+              xl: "20px",
+              "2xl": "24px",
+              "3xl": "32px",
+              full: "9999px",
+              button: "8px",
+            },
+          },
+        },
+      };
     </script>
-
     <style>
-      :where([class^="ri-"])::before {
+      /* :where([class^="ri-"])::before {
         content: "\f3c2";
-      }
-      .dark body {
-        background-color: #1e1e1e;
-        color: #e5e5e5;
-      }
-      .dark .bg-white {
-        background-color: #2d2d2d;
-      }
-      .dark .bg-gray-50 {
-        background-color: #1e1e1e;
-      }
-      .dark .text-gray-700 {
-        color: #e5e5e5;
-      }
-      .dark .text-gray-800 {
-        color: #f3f3f3;
-      }
-      .dark .border-gray-300 {
-        border-color: #404040;
-      }
-      .dark .bg-blue-100 {
-        background-color: rgba(79, 195, 247, 0.2);
-      }
-      .dark .shadow-lg {
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3),
-          0 4px 6px -2px rgba(0, 0, 0, 0.2);
-      }
-      .dark .text-primary {
-        color: #00ffff;
-      }
-      .dark h1,
-      .dark h2,
-      .dark h3,
-      .dark h4,
-      .dark h5,
-      .dark h6 {
-        color: #00ffff;
-      }
-      .dark .filter-button {
-        color: #00ffff;
-      }
-      .dark .filter-button.active {
-        background-color: #00ffff;
-        color: #1e1e1e;
-      }
-      .dark .team-card .text-primary {
-        color: #0fff95;
-      }
-      .dark .stats-card .text-primary {
-        color: #ff00ff;
-      }
+      } */
       body {
         font-family: "Inter", sans-serif;
         scroll-behavior: smooth;
       }
+
       h1,
       h2,
       h3,
@@ -103,11 +53,13 @@
       h6 {
         font-family: "Orbitron", sans-serif;
       }
+
       .hero-section {
         height: 100vh;
         position: relative;
         overflow: hidden;
       }
+
       .hero-video {
         position: absolute;
         top: 0;
@@ -117,6 +69,7 @@
         object-fit: cover;
         z-index: -1;
       }
+
       .hero-overlay {
         position: absolute;
         top: 0;
@@ -126,146 +79,40 @@
         background: rgba(0, 0, 0, 0.6);
         z-index: 0;
       }
-      /* Animated underline effect on navbar links */
-      .navbar a {
-        position: relative;
-        color: inherit; /* use current color */
-        text-decoration: none;
-        padding-bottom: 4px;
-        font-weight: 600;
-        transition: color 0.3s ease;
-      }
-
-      .navbar a::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        height: 3px;
-        width: 0%;
-        background: var(--secondary-color, #00ffff); /* fallback cyan */
-        border-radius: 2px;
-        transition: width 0.3s ease;
-      }
-
-      .navbar a:hover::after,
-      .navbar a:focus::after {
-        width: 100%;
-      }
-
-      /* Light mode variables */
-      :root {
-        --bg-color: #ffffff;
-        --text-color: #1e1e1e;
-        --secondary-color: #0077ff;
-        --navbar-bg: rgba(255, 255, 255, 0.9);
-      }
-
-      /* Dark mode variables */
-      .dark {
-        --bg-color: #1e1e1e;
-        --text-color: #e5e5e5;
-        --secondary-color: #00ffff;
-        --navbar-bg: rgba(26, 35, 126, 0.95);
-      }
-
-      body {
-        background-color: var(--bg-color);
-        color: var(--text-color);
-        transition: background-color 0.4s ease, color 0.4s ease;
-      }
 
       .navbar {
-        background-color: var(--navbar-bg);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        transition: background-color 0.4s ease, box-shadow 0.4s ease;
-        backdrop-filter: saturate(180%) blur(20px);
+        transition: all 0.3s ease;
       }
 
-      /* Navbar links color (inherit) */
-      .navbar a {
-        color: var(--text-color);
+      .navbar.scrolled {
+        background-color: rgba(26, 35, 126, 0.95);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06);
       }
-
-      /* On hover, change text color */
-      .navbar a:hover,
-      .navbar a:focus {
-        color: var(--secondary-color);
-        outline: none;
-      }
-
-      /* Mobile menu links hover */
-      #mobile-menu a:hover,
-      #mobile-menu a:focus {
-        color: var(--secondary-color);
-        background: rgba(0, 0, 0, 0.1);
-        border-radius: 6px;
-        outline: none;
-      }
-
-      /* Transition for the mobile menu */
-      #mobile-menu {
-        transition: max-height 0.3s ease, opacity 0.3s ease;
-        overflow: hidden;
-        max-height: 0;
-        opacity: 0;
-      }
-
-      #mobile-menu.active {
-        max-height: 500px; /* enough to show all links */
-        opacity: 1;
-      }
-
-      /* Optional: make the dark/light toggle label clickable and nice */
-      .switch {
-        cursor: pointer;
-        user-select: none;
-      }
-
-      /* Optional smooth color transitions on toggle */
-      .switch input[type="checkbox"] {
-        cursor: pointer;
-      }
-
-      /* Keep your logo size and background intact - no changes here */
 
       .team-card {
-        transition: all 0.5s ease;
-        transform: translateX(-20px);
-        background-color: #fff;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
       }
 
       .team-card:hover {
-        transform: translateX(0) translateY(-12px);
-        background-color: #000;
-        /* color: #00ffff; optional: neon cyan text in dark */
-        box-shadow: 0 25px 35px -5px rgba(0, 0, 0, 0.3),
-          0 15px 15px -5px rgba(0, 0, 0, 0.1);
-      }
-      .dark .team-card {
-        transition: all 0.5s ease;
-        transform: translateX(-20px);
-        background-color: #1a1a1a;
-      }
-
-      .dark .team-card:hover {
-        transform: translateX(0) translateY(-12px);
-        background-color: #000;
-        color: #00ffff;
-        box-shadow: 0 25px 35px -5px rgba(0, 255, 255, 0.3),
-          0 15px 15px -5px rgba(0, 255, 255, 0.1);
+        transform: translateY(-8px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+          0 10px 10px -5px rgba(0, 0, 0, 0.04);
       }
 
       .gallery-item {
         overflow: hidden;
         position: relative;
       }
+
       .gallery-item img {
         transition: transform 0.5s ease;
       }
+
       .gallery-item:hover img {
         transform: scale(1.05);
       }
+
       .gallery-overlay {
         position: absolute;
         bottom: 0;
@@ -280,12 +127,15 @@
         opacity: 0;
         transition: opacity 0.3s ease;
       }
+
       .gallery-item:hover .gallery-overlay {
         opacity: 1;
       }
+
       .scroll-down {
         animation: bounce 2s infinite;
       }
+
       @keyframes bounce {
         0%,
         20%,
@@ -301,6 +151,7 @@
           transform: translateY(-10px);
         }
       }
+
       input[type="checkbox"],
       input[type="radio"] {
         appearance: none;
@@ -313,10 +164,12 @@
         cursor: pointer;
         position: relative;
       }
+
       input[type="checkbox"]:checked,
       input[type="radio"]:checked {
         background-color: #4fc3f7;
       }
+
       input[type="checkbox"]:checked::before,
       input[type="radio"]:checked::before {
         content: "✓";
@@ -327,9 +180,11 @@
         color: white;
         font-size: 12px;
       }
+
       input[type="radio"] {
         border-radius: 50%;
       }
+
       input[type="radio"]:checked::before {
         content: "";
         width: 10px;
@@ -337,6 +192,7 @@
         background-color: white;
         border-radius: 50%;
       }
+
       .custom-range {
         -webkit-appearance: none;
         width: 100%;
@@ -345,6 +201,7 @@
         background: #e2e8f0;
         outline: none;
       }
+
       .custom-range::-webkit-slider-thumb {
         -webkit-appearance: none;
         appearance: none;
@@ -356,6 +213,7 @@
         border: 2px solid white;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
       }
+
       .custom-range::-moz-range-thumb {
         width: 20px;
         height: 20px;
@@ -365,17 +223,20 @@
         border: 2px solid white;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
       }
+
       .custom-switch {
         position: relative;
         display: inline-block;
         width: 50px;
         height: 24px;
       }
+
       .custom-switch input {
         opacity: 0;
         width: 0;
         height: 0;
       }
+
       .switch-slider {
         position: absolute;
         cursor: pointer;
@@ -387,6 +248,7 @@
         transition: 0.4s;
         border-radius: 34px;
       }
+
       .switch-slider:before {
         position: absolute;
         content: "";
@@ -398,31 +260,38 @@
         transition: 0.4s;
         border-radius: 50%;
       }
+
       input:checked + .switch-slider {
         background-color: #4fc3f7;
       }
+
       input:checked + .switch-slider:before {
         transform: translateX(26px);
       }
+
       .filter-button.active {
         background-color: #1a237e;
         color: white;
       }
+
       .reveal {
         opacity: 0;
         transform: translateY(30px);
         transition: opacity 0.6s ease, transform 0.6s ease;
       }
+
       .reveal.active {
         opacity: 1;
         transform: translateY(0);
       }
+
       .parallax {
         background-attachment: fixed;
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
       }
+
       .lightbox {
         display: none;
         position: fixed;
@@ -435,10 +304,12 @@
         align-items: center;
         justify-content: center;
       }
+
       .lightbox-content {
         max-width: 90%;
         max-height: 90%;
       }
+
       .lightbox-close {
         position: absolute;
         top: 20px;
@@ -447,6 +318,7 @@
         font-size: 30px;
         cursor: pointer;
       }
+
       .back-to-top {
         position: fixed;
         bottom: 20px;
@@ -456,6 +328,7 @@
         visibility: hidden;
         transition: all 0.3s ease;
       }
+
       .back-to-top.visible {
         opacity: 1;
         visibility: visible;
@@ -792,25 +665,7 @@
         }
       }
     </style>
-    <link
-      href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"
-      rel="stylesheet"
-    />
   </head>
-  <script>
-    // Dark mode toggle
-    const toggle = document.getElementById("input");
-    toggle.addEventListener("change", () => {
-      document.body.classList.toggle("dark", toggle.checked);
-    });
-
-    // Mobile menu toggle
-    const mobileBtn = document.getElementById("mobile-menu-button");
-    const mobileMenu = document.getElementById("mobile-menu");
-    mobileBtn.addEventListener("click", () => {
-      mobileMenu.classList.toggle("active");
-    });
-  </script>
   <body class="bg-gray-50">
     <!-- Navbar -->
     <nav
@@ -830,79 +685,8 @@
           <span class="sr-only">AeroBMSCE</span>
           <!-- for screen readers --></a
         >
-        <div class="hidden md:flex items-center space-x-8">
-          <!-- From Uiverse.io by RiccardoRapelli -->
-          <label class="switch mr-4">
-            <input id="input" type="checkbox" />
-            <div class="slider round">
-              <div class="sun-moon">
-                <!-- Moon Dots -->
-                <svg id="moon-dot-1" class="moon-dot" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="50"></circle>
-                </svg>
-                <svg id="moon-dot-2" class="moon-dot" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="50"></circle>
-                </svg>
-                <svg id="moon-dot-3" class="moon-dot" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="50"></circle>
-                </svg>
 
-                <!-- Light Rays -->
-                <svg id="light-ray-1" class="light-ray" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="50"></circle>
-                </svg>
-                <svg id="light-ray-2" class="light-ray" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="50"></circle>
-                </svg>
-                <svg id="light-ray-3" class="light-ray" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="50"></circle>
-                </svg>
-
-                <!-- Clouds -->
-                <svg id="cloud-1" class="cloud-dark" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="50"></circle>
-                </svg>
-                <svg id="cloud-2" class="cloud-dark" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="50"></circle>
-                </svg>
-                <svg id="cloud-3" class="cloud-dark" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="50"></circle>
-                </svg>
-                <svg id="cloud-4" class="cloud-light" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="50"></circle>
-                </svg>
-                <svg id="cloud-5" class="cloud-light" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="50"></circle>
-                </svg>
-                <svg id="cloud-6" class="cloud-light" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="50"></circle>
-                </svg>
-              </div>
-              <div class="stars">
-                <svg id="star-1" class="star" viewBox="0 0 20 20">
-                  <path
-                    d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"
-                  ></path>
-                </svg>
-                <svg id="star-2" class="star" viewBox="0 0 20 20">
-                  <path
-                    d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"
-                  ></path>
-                </svg>
-                <svg id="star-3" class="star" viewBox="0 0 20 20">
-                  <path
-                    d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"
-                  ></path>
-                </svg>
-                <svg id="star-4" class="star" viewBox="0 0 20 20">
-                  <path
-                    d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"
-                  ></path>
-                </svg>
-              </div>
-            </div>
-          </label>
-
+        <div class="hidden md:flex space-x-8">
           <a
             href="#home"
             class="text-white hover:text-secondary transition-colors"
@@ -928,11 +712,7 @@
             class="text-white hover:text-secondary transition-colors"
             >Contact</a
           >
-        </div>
-        <div class="md:hidden w-8 h-8 flex items-center justify-center">
-          <i class="ri-menu-line text-white ri-2x" id="mobile-menu-button"></i>
-        </div>
-      </div>
+          
       <!-- Mobile Menu -->
       <div
         id="mobile-menu"
@@ -967,12 +747,13 @@
         </div>
       </div>
     </nav>
+
     <!-- Hero Section -->
     <section id="home" class="hero-section flex items-center justify-center">
       <div class="hero-overlay"></div>
       <div
         style="
-          background-image: url('https://readdy.ai/api/search-image?query=aerial%20view%20of%20drone%20flying%20over%20beautiful%20landscape%20with%20mountains%20and%20lakes%2C%20cinematic%20shot%2C%20blue%20sky%20with%20clouds%2C%20professional%20photography%2C%20high%20resolution%2C%20dramatic%20lighting&width=1920&height=1080&seq=drone1&orientation=landscape');
+          background-image: url('WhatsApp\ Image\ 2025-05-24\ at\ 21.54.04_9d743ed3.jpg');
         "
         class="hero-video absolute inset-0 bg-cover bg-center"
       ></div>
@@ -986,7 +767,7 @@
           Join the Ultimate RC & Drone Community
         </p>
         <button
-          class="bg-[#00E5FF] hover:bg-blue-400 text-black font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 reveal whitespace-nowrap"
+          class="bg-[#00E5FF] hover:bg-blue-400 text-primary font-bold py-3 px-8 rounded-button transition-all duration-300 transform hover:scale-105 reveal whitespace-nowrap"
         >
           Take Flight
         </button>
@@ -999,11 +780,12 @@
         </div>
       </div>
     </section>
+
     <!-- About Section -->
     <section id="about" class="py-20 bg-white">
       <div class="container mx-auto px-4">
         <div class="text-center mb-16">
-          <h2 class="text-4xl font-bold text-center text-[#FF69B4] mb-16">
+          <h2 class="text-4xl font-bold text-primary mb-4 reveal">
             Our Mission
           </h2>
           <div class="w-24 h-1 bg-secondary mx-auto mb-8 reveal"></div>
@@ -1013,6 +795,7 @@
             to create a community where innovation meets the sky.
           </p>
         </div>
+
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div class="reveal">
             <div class="rounded-lg overflow-hidden shadow-xl">
@@ -1028,7 +811,7 @@
               Building a Community of Flight Enthusiasts
             </h3>
             <p class="text-gray-700 mb-6">
-              At AeroBMSCE, we believe that the sky is not the limit, but just
+              At SkyMasters, we believe that the sky is not the limit, but just
               the beginning. Our community brings together hobbyists,
               professionals, and innovators who share a passion for aerial
               technology and flight.
@@ -1045,7 +828,7 @@
                 >
                   <i class="ri-group-line text-primary ri-lg"></i>
                 </div>
-                <span class="text-gray-800 font-medium">50+ Members</span>
+                <span class="text-gray-800 font-medium">500+ Members</span>
               </div>
               <div class="flex items-center">
                 <div
@@ -1053,7 +836,7 @@
                 >
                   <i class="ri-calendar-event-line text-primary ri-lg"></i>
                 </div>
-                <span class="text-gray-800 font-medium">30+ Annual Events</span>
+                <span class="text-gray-800 font-medium">50+ Annual Events</span>
               </div>
               <div class="flex items-center">
                 <div
@@ -1066,40 +849,30 @@
             </div>
           </div>
         </div>
+
         <!-- Timeline -->
         <div class="mt-24 reveal">
-          <h3
-            class="text-4xl font-bold text-center text-[#FF69B4] mb-16"
-            data-aos="fade-up"
-          >
+          <h3 class="text-3xl font-bold text-center text-primary mb-16">
             Our Journey
           </h3>
-
           <div class="relative">
             <!-- Timeline Line -->
             <div
-              class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gray-800 dark:bg-gray-200"
+              class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-blue-100"
             ></div>
+
             <!-- Timeline Items -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 relative">
               <!-- Item 1 -->
-              <div
-                class="md:col-start-1 md:text-right reveal"
-                data-aos="fade-right"
-                data-aos-delay="100"
-              >
+              <div class="md:col-start-1 md:text-right reveal">
                 <div
-                  class="bg-gray-900 dark:bg-white p-6 rounded-lg shadow-lg border border-gray-800 dark:border-gray-300 relative"
+                  class="bg-white p-6 rounded-lg shadow-lg border border-gray-100 relative"
                 >
                   <div
-                    class="absolute top-1/2 -right-4 md:block hidden transform -translate-y-1/2 w-8 h-8 bg-gray-700 dark:bg-gray-100 rounded-full border-4 border-gray-900 dark:border-white z-10"
+                    class="absolute top-1/2 -right-4 md:block hidden transform -translate-y-1/2 w-8 h-8 bg-secondary rounded-full border-4 border-white z-10"
                   ></div>
-                  <h4
-                    class="text-xl font-bold text-gray-100 dark:text-gray-900 mb-2"
-                  >
-                    2018
-                  </h4>
-                  <p class="text-gray-300 dark:text-gray-800">
+                  <h4 class="text-xl font-bold text-primary mb-2">2018</h4>
+                  <p class="text-gray-700">
                     Founded by a group of 5 aviation enthusiasts from BMSCE with
                     a shared vision to create an inclusive CLUB for aerial
                     hobbyists.
@@ -1109,46 +882,31 @@
               <div class="md:col-start-2 hidden md:block"></div>
               <!-- Item 2 -->
               <div class="md:col-start-1 hidden md:block"></div>
-              <div
-                class="md:col-start-2 reveal"
-                data-aos="fade-left"
-                data-aos-delay="200"
-              >
+              <div class="md:col-start-2 reveal">
                 <div
-                  class="bg-gray-900 dark:bg-white p-6 rounded-lg shadow-lg border border-gray-800 dark:border-gray-300 relative"
+                  class="bg-white p-6 rounded-lg shadow-lg border border-gray-100 relative"
                 >
                   <div
-                    class="absolute top-1/2 -left-4 md:block hidden transform -translate-y-1/2 w-8 h-8 bg-gray-700 dark:bg-gray-100 rounded-full border-4 border-gray-900 dark:border-white z-10"
+                    class="absolute top-1/2 -left-4 md:block hidden transform -translate-y-1/2 w-8 h-8 bg-secondary rounded-full border-4 border-white z-10"
                   ></div>
-                  <h4
-                    class="text-xl font-bold text-gray-100 dark:text-gray-900 mb-2"
-                  >
-                    2020
-                  </h4>
-                  <p class="text-gray-300 dark:text-gray-800">
+                  <h4 class="text-xl font-bold text-primary mb-2">2020</h4>
+                  <p class="text-gray-700">
                     Expanded to 10+ members and hosted our first regional drone
                     racing championship with participants from different states.
                   </p>
                 </div>
               </div>
+
               <!-- Item 3 -->
-              <div
-                class="md:col-start-1 md:text-right reveal"
-                data-aos="fade-right"
-                data-aos-delay="300"
-              >
+              <div class="md:col-start-1 md:text-right reveal">
                 <div
-                  class="bg-gray-900 dark:bg-white p-6 rounded-lg shadow-lg border border-gray-800 dark:border-gray-300 relative"
+                  class="bg-white p-6 rounded-lg shadow-lg border border-gray-100 relative"
                 >
                   <div
-                    class="absolute top-1/2 -right-4 md:block hidden transform -translate-y-1/2 w-8 h-8 bg-gray-700 dark:bg-gray-100 rounded-full border-4 border-gray-900 dark:border-white z-10"
+                    class="absolute top-1/2 -right-4 md:block hidden transform -translate-y-1/2 w-8 h-8 bg-secondary rounded-full border-4 border-white z-10"
                   ></div>
-                  <h4
-                    class="text-xl font-bold text-gray-100 dark:text-gray-900 mb-2"
-                  >
-                    2022
-                  </h4>
-                  <p class="text-gray-300 dark:text-gray-800">
+                  <h4 class="text-xl font-bold text-primary mb-2">2022</h4>
+                  <p class="text-gray-700">
                     Launched our exclusive Club, introducing aeromodelling to
                     over 200+ students across the entire college.
                   </p>
@@ -1157,23 +915,15 @@
               <div class="md:col-start-2 hidden md:block"></div>
               <!-- Item 4 -->
               <div class="md:col-start-1 hidden md:block"></div>
-              <div
-                class="md:col-start-2 reveal"
-                data-aos="fade-left"
-                data-aos-delay="400"
-              >
+              <div class="md:col-start-2 reveal">
                 <div
-                  class="bg-gray-900 dark:bg-white p-6 rounded-lg shadow-lg border border-gray-800 dark:border-gray-300 relative"
+                  class="bg-white p-6 rounded-lg shadow-lg border border-gray-100 relative"
                 >
                   <div
-                    class="absolute top-1/2 -left-4 md:block hidden transform -translate-y-1/2 w-8 h-8 bg-gray-700 dark:bg-gray-100 rounded-full border-4 border-gray-900 dark:border-white z-10"
+                    class="absolute top-1/2 -left-4 md:block hidden transform -translate-y-1/2 w-8 h-8 bg-secondary rounded-full border-4 border-white z-10"
                   ></div>
-                  <h4
-                    class="text-xl font-bold text-gray-100 dark:text-gray-900 mb-2"
-                  >
-                    2025
-                  </h4>
-                  <p class="text-gray-300 dark:text-gray-800">
+                  <h4 class="text-xl font-bold text-primary mb-2">2025</h4>
+                  <p class="text-gray-700">
                     Today, with over 50 members, we're pioneering new
                     technologies and participating in national competitions that
                     push the boundaries of aerial innovation.
@@ -1185,11 +935,12 @@
         </div>
       </div>
     </section>
+
     <!-- Teams Section -->
     <section id="teams" class="py-20 bg-gray-50">
       <div class="container mx-auto px-4">
         <div class="text-center mb-16">
-          <h2 class=class="text-4xl font-bold text-center text-[#FF69B4] mb-16">
+          <h2 class="text-4xl font-bold text-primary mb-4 reveal">
             Meet the Squadrons
           </h2>
           <div class="w-24 h-1 bg-secondary mx-auto mb-8 reveal"></div>
@@ -1198,6 +949,7 @@
             different aspects of aerial technology and flight.
           </p>
         </div>
+
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <!-- Team Alpha -->
           <div
@@ -1228,6 +980,7 @@
               </div>
             </div>
           </div>
+
           <!-- Team Beta -->
           <div
             class="team-card bg-white rounded-lg shadow-lg overflow-hidden reveal"
@@ -1257,6 +1010,7 @@
               </div>
             </div>
           </div>
+
           <!-- Team Charlie -->
           <div
             class="team-card bg-white rounded-lg shadow-lg overflow-hidden reveal"
@@ -1272,8 +1026,8 @@
                   Team Charlie
                 </h3>
                 <p class="text-gray-700 text-center mb-6">
-                  Engineering and innovation team developing cutting-edge
-                  drone,UAV's and RC technologies.
+                  Engineering and innovation team developing cutting-edge drone,
+                  UAVs and RC technologies.
                 </p>
                 <div class="flex justify-center">
                   <button
@@ -1286,6 +1040,7 @@
               </div>
             </div>
           </div>
+
           <!-- Team Delta -->
           <div
             class="team-card bg-white rounded-lg shadow-lg overflow-hidden reveal"
@@ -1318,6 +1073,7 @@
         </div>
       </div>
     </section>
+
     <!-- Parallax Section -->
     <section
       class="parallax py-24 text-white"
@@ -1342,11 +1098,12 @@
         </div>
       </div>
     </section>
+
     <!-- Gallery Section -->
     <section id="gallery" class="py-20 bg-white">
       <div class="container mx-auto px-4">
         <div class="text-center mb-16">
-          <h2 class="class="text-4xl font-bold text-center text-[#FF69B4] mb-16"">
+          <h2 class="text-4xl font-bold text-primary mb-4 reveal">
             Media Gallery
           </h2>
           <div class="w-24 h-1 bg-secondary mx-auto mb-8 reveal"></div>
@@ -1355,6 +1112,7 @@
             event highlights.
           </p>
         </div>
+
         <!-- Filter Buttons -->
         <div class="flex flex-wrap justify-center gap-4 mb-12 reveal">
           <button
@@ -1382,6 +1140,7 @@
             Events
           </button>
         </div>
+
         <!-- Gallery Grid -->
         <div
           class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reveal"
@@ -1475,7 +1234,7 @@
             data-category="events"
           >
             <img
-              src="https://readdy.ai/api/search-image?query=young%20diverse%20group%20of%20students%20learning%20about%20drone%20technology%2C%20classroom%20setting%2C%20instructor%20showing%20drone%20components%2C%20engaged%20faces%2C%20educational%20environment%2C%20professional%20photography&width=600&height=400&seq=event2&orientation=landscape"
+              src="WhatsApp Image 2025-05-24 at 22.10.07_13e81e63.jpg"
               alt="Youth Workshop"
               class="w-full h-64 object-cover object-top"
             />
@@ -1489,6 +1248,7 @@
             </div>
           </div>
         </div>
+
         <div class="text-center mt-12 reveal">
           <button
             class="bg-secondary hover:bg-blue-400 text-white font-bold py-3 px-8 rounded-button transition-all duration-300 whitespace-nowrap"
@@ -1498,6 +1258,7 @@
         </div>
       </div>
     </section>
+
     <!-- Stats Section -->
     <section class="py-20 bg-gray-50">
       <div class="container mx-auto px-4">
@@ -1511,6 +1272,7 @@
             <h3 class="text-4xl font-bold text-primary mb-2">50+</h3>
             <p class="text-gray-700">Active Members</p>
           </div>
+
           <div class="bg-white p-8 rounded-lg shadow-lg text-center reveal">
             <div
               class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4"
@@ -1520,6 +1282,7 @@
             <h3 class="text-4xl font-bold text-primary mb-2">4</h3>
             <p class="text-gray-700">States Represented</p>
           </div>
+
           <div class="bg-white p-8 rounded-lg shadow-lg text-center reveal">
             <div
               class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4"
@@ -1529,6 +1292,7 @@
             <h3 class="text-4xl font-bold text-primary mb-2">30+</h3>
             <p class="text-gray-700">Annual Events</p>
           </div>
+
           <div class="bg-white p-8 rounded-lg shadow-lg text-center reveal">
             <div
               class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4"
@@ -1545,15 +1309,16 @@
     <section id="contact" class="py-20 bg-white">
       <div class="container mx-auto px-4">
         <div class="text-center mb-16">
-          <h2 class="text-4xl font-bold text-center text-[#FF69B4] mb-16">
+          <h2 class="text-4xl font-bold text-primary mb-4 reveal">
             Get In Touch
           </h2>
           <div class="w-24 h-1 bg-secondary mx-auto mb-8 reveal"></div>
           <p class="text-lg text-gray-700 max-w-3xl mx-auto reveal">
-            Have questions about joining our community or attending our events?
-            Reach out to us!
+            Have questions about joining our club or attending our events? Reach
+            out to us!
           </p>
         </div>
+
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div class="reveal">
             <form class="bg-white p-8 rounded-lg shadow-lg">
@@ -1589,7 +1354,7 @@
                   type="text"
                   id="subject"
                   class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent transition-colors"
-                  placeholder="Choose your domain? (e.g., Drones, RC Planes, Elecronics etc.)"
+                  placeholder="Choose your domain"
                 />
               </div>
               <div class="mb-6">
@@ -1615,17 +1380,19 @@
               </div>
               <button
                 type="submit"
-                class="w-full bg-blue-700 dark:bg-blue-800 text-[#FFFF33] font-bold py-3 px-6 rounded-button transition-all duration-300 whitespace-nowrap hover:scale-105 ring-0 hover:ring-4 hover:ring-[#FF00FF] dark:hover:ring-[#FFFF33]"
+                class="w-full bg-primary hover:bg-blue-800 text-white font-bold py-3 px-6 rounded-button transition-colors duration-300 whitespace-nowrap"
               >
                 Send Message
               </button>
             </form>
           </div>
+
           <div class="reveal">
             <div class="bg-white p-8 rounded-lg shadow-lg h-full">
               <h3 class="text-2xl font-bold text-primary mb-6">
                 Contact Information
               </h3>
+
               <div class="mb-8">
                 <div class="flex items-start mb-4">
                   <div
@@ -1640,6 +1407,7 @@
                     </p>
                   </div>
                 </div>
+
                 <div class="flex items-start mb-4">
                   <div
                     class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full mr-4 mt-1"
@@ -1651,6 +1419,7 @@
                     <p class="text-gray-700">aeroclubbmsce@gmail.com</p>
                   </div>
                 </div>
+
                 <div class="flex items-start mb-4">
                   <div
                     class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full mr-4 mt-1"
@@ -1663,6 +1432,7 @@
                   </div>
                 </div>
               </div>
+
               <h3 class="text-2xl font-bold text-primary mb-4">Follow Us</h3>
               <div class="flex space-x-4 mb-8">
                 <a
@@ -1690,11 +1460,12 @@
                   <i class="ri-youtube-fill text-primary"></i>
                 </a>
               </div>
+
               <h3 class="text-2xl font-bold text-primary mb-4">Location</h3>
               <div
                 class="rounded-lg overflow-hidden h-64 bg-cover bg-center"
                 style="
-                  background-image: url('WhatsApp\ Image\ 2025-05-25\ at\ 17.36.43_21d219d1.jpg');
+                  background-image: url('WhatsApp\ Image\ 2025-05-24\ at\ 22.23.54_f077ffac.jpg');
                 "
               ></div>
             </div>
@@ -1702,10 +1473,11 @@
         </div>
       </div>
     </section>
+
     <!-- Newsletter Section -->
-    <section class="py-20 bg-primary text-blue">
+    <section class="py-20 bg-primary text-white">
       <div class="container mx-auto px-4 text-center">
-        <h2 class="text-4xl font-bold text-center text-[#FF69B4] mb-16">Stay Updated</h2>
+        <h2 class="text-3xl font-bold mb-4 reveal">Stay Updated</h2>
         <p class="text-lg max-w-2xl mx-auto mb-8 reveal">
           Join our exclusive Technical club and explore your potential in any of
           the subsystems.
@@ -1718,7 +1490,7 @@
             class="flex-grow px-4 py-3 rounded-l-lg sm:rounded-l-lg sm:rounded-r-none rounded-r-lg text-gray-800 focus:outline-none"
           />
           <button
-            href="#"
+            type="submit"
             class="bg-[#FF6E40] hover:bg-orange-500 text-white font-bold py-3 px-6 rounded-r-lg sm:rounded-r-lg sm:rounded-l-none rounded-l-lg transition-colors duration-300 whitespace-nowrap"
           >
             Join Us
@@ -1726,6 +1498,7 @@
         </form>
       </div>
     </section>
+
     <!-- Footer -->
     <footer class="bg-gray-900 text-white py-12">
       <div class="container mx-auto px-4">
@@ -1764,7 +1537,7 @@
             </div>
           </div>
           <a
-            href="https://github.com/Silver-Spider/Gladiators"
+            href="https://github.com/Silver-Spider"
             target="_blank"
             rel="noopener noreferrer"
             class="inline-block no-underline"
@@ -1785,6 +1558,7 @@
               </div>
             </div>
           </a>
+
           <div>
             <h3 class="text-xl font-bold mb-4">Quick Links</h3>
             <ul class="space-y-2">
@@ -1825,6 +1599,7 @@
               </li>
             </ul>
           </div>
+
           <div>
             <h3 class="text-xl font-bold mb-4">Resources</h3>
             <ul class="space-y-2">
@@ -1865,6 +1640,7 @@
               </li>
             </ul>
           </div>
+
           <div>
             <h3 class="text-xl font-bold mb-4">Contact Us</h3>
             <ul class="space-y-2">
@@ -1885,11 +1661,12 @@
             </ul>
           </div>
         </div>
+
         <div
           class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center"
         >
           <p class="text-gray-400 mb-4 md:mb-0">
-            © 2025 AeroBMSCE. All rights reserved.
+            © 2025 SkyMasters. All rights reserved.
           </p>
           <div class="flex space-x-6">
             <a href="#" class="text-gray-400 hover:text-white transition-colors"
@@ -1905,6 +1682,7 @@
         </div>
       </div>
     </footer>
+
     <!-- Back to Top Button -->
     <button
       id="back-to-top"
@@ -1912,41 +1690,20 @@
     >
       <i class="ri-arrow-up-line ri-lg"></i>
     </button>
+
     <!-- Lightbox -->
     <div id="lightbox" class="lightbox">
       <span class="lightbox-close">&times;</span>
       <img class="lightbox-content" id="lightbox-img" />
     </div>
-    <!-- Scripts -->
-    <script id="theme-script">
-      document.addEventListener("DOMContentLoaded", function () {
-        const themeToggle = document.getElementById("theme-toggle");
 
-        // Check for saved theme preference or system preference
-        if (
-          localStorage.getItem("theme") === "dark" ||
-          (!localStorage.getItem("theme") &&
-            window.matchMedia("(prefers-color-scheme: dark)").matches)
-        ) {
-          document.documentElement.classList.add("dark");
-        }
-        // Theme toggle functionality
-        themeToggle.addEventListener("click", function () {
-          if (document.documentElement.classList.contains("dark")) {
-            document.documentElement.classList.remove("dark");
-            localStorage.setItem("theme", "light");
-          } else {
-            document.documentElement.classList.add("dark");
-            localStorage.setItem("theme", "dark");
-          }
-        });
-      });
-    </script>
+    <!-- Scripts -->
     <script id="navbar-script">
       document.addEventListener("DOMContentLoaded", function () {
         const navbar = document.getElementById("navbar");
         const mobileMenuButton = document.getElementById("mobile-menu-button");
         const mobileMenu = document.getElementById("mobile-menu");
+
         // Handle navbar background on scroll
         window.addEventListener("scroll", function () {
           if (window.scrollY > 50) {
@@ -1955,10 +1712,12 @@
             navbar.classList.remove("scrolled");
           }
         });
+
         // Mobile menu toggle
         mobileMenuButton.addEventListener("click", function () {
           mobileMenu.classList.toggle("hidden");
         });
+
         // Close mobile menu when clicking on a link
         const mobileLinks = mobileMenu.querySelectorAll("a");
         mobileLinks.forEach((link) => {
@@ -1968,13 +1727,16 @@
         });
       });
     </script>
+
     <script id="scroll-animation-script">
       document.addEventListener("DOMContentLoaded", function () {
         // Reveal elements on scroll
         const revealElements = document.querySelectorAll(".reveal");
+
         function checkReveal() {
           const windowHeight = window.innerHeight;
           const revealPoint = 150;
+
           revealElements.forEach((element) => {
             const elementTop = element.getBoundingClientRect().top;
             if (elementTop < windowHeight - revealPoint) {
@@ -1982,12 +1744,16 @@
             }
           });
         }
+
         // Initial check
         checkReveal();
+
         // Check on scroll
         window.addEventListener("scroll", checkReveal);
+
         // Back to top button
         const backToTopButton = document.getElementById("back-to-top");
+
         function toggleBackToTopButton() {
           if (window.scrollY > 300) {
             backToTopButton.classList.add("visible");
@@ -1995,10 +1761,13 @@
             backToTopButton.classList.remove("visible");
           }
         }
+
         // Initial check
         toggleBackToTopButton();
+
         // Check on scroll
         window.addEventListener("scroll", toggleBackToTopButton);
+
         // Scroll to top when clicked
         backToTopButton.addEventListener("click", function () {
           window.scrollTo({
@@ -2006,12 +1775,15 @@
             behavior: "smooth",
           });
         });
+
         // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
           anchor.addEventListener("click", function (e) {
             e.preventDefault();
+
             const targetId = this.getAttribute("href");
             if (targetId === "#") return;
+
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
               window.scrollTo({
@@ -2023,18 +1795,23 @@
         });
       });
     </script>
+
     <script id="gallery-script">
       document.addEventListener("DOMContentLoaded", function () {
         // Gallery filtering
         const filterButtons = document.querySelectorAll(".filter-button");
         const galleryItems = document.querySelectorAll(".gallery-item");
+
         filterButtons.forEach((button) => {
           button.addEventListener("click", function () {
             // Remove active class from all buttons
             filterButtons.forEach((btn) => btn.classList.remove("active"));
+
             // Add active class to clicked button
             this.classList.add("active");
+
             const filter = this.getAttribute("data-filter");
+
             galleryItems.forEach((item) => {
               if (
                 filter === "all" ||
@@ -2047,20 +1824,25 @@
             });
           });
         });
+
         // Lightbox functionality
         const lightbox = document.getElementById("lightbox");
         const lightboxImg = document.getElementById("lightbox-img");
         const lightboxClose = document.querySelector(".lightbox-close");
+
         galleryItems.forEach((item) => {
           const img = item.querySelector("img");
+
           img.addEventListener("click", function () {
             lightboxImg.src = this.src;
             lightbox.style.display = "flex";
           });
         });
+
         lightboxClose.addEventListener("click", function () {
           lightbox.style.display = "none";
         });
+
         // Close lightbox when clicking outside the image
         lightbox.addEventListener("click", function (e) {
           if (e.target === lightbox) {
@@ -2069,49 +1851,60 @@
         });
       });
     </script>
+
     <script id="form-script">
       document.addEventListener("DOMContentLoaded", function () {
         const contactForm = document.querySelector("form");
+
         contactForm.addEventListener("submit", function (e) {
           e.preventDefault();
+
           // Simple form validation
           const name = document.getElementById("name");
           const email = document.getElementById("email");
           const subject = document.getElementById("subject");
           const message = document.getElementById("message");
+
           let isValid = true;
+
           if (!name.value.trim()) {
             isValid = false;
             name.classList.add("border-red-500");
           } else {
             name.classList.remove("border-red-500");
           }
+
           if (!email.value.trim() || !email.value.includes("@")) {
             isValid = false;
             email.classList.add("border-red-500");
           } else {
             email.classList.remove("border-red-500");
           }
+
           if (!subject.value.trim()) {
             isValid = false;
             subject.classList.add("border-red-500");
           } else {
             subject.classList.remove("border-red-500");
           }
+
           if (!message.value.trim()) {
             isValid = false;
             message.classList.add("border-red-500");
           } else {
             message.classList.remove("border-red-500");
           }
+
           if (isValid) {
             // Simulate form submission
             const submitButton = contactForm.querySelector(
               'button[type="submit"]'
             );
             const originalText = submitButton.textContent;
+
             submitButton.disabled = true;
             submitButton.textContent = "Sending...";
+
             // Simulate API call
             setTimeout(() => {
               alert("Message sent successfully!");
@@ -2121,13 +1914,6 @@
             }, 1500);
           }
         });
-      });
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-    <script>
-      AOS.init({
-        duration: 1000,
-        once: true,
       });
     </script>
   </body>
